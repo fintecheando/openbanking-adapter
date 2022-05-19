@@ -178,6 +178,16 @@
             <artifactId>liquibase-hibernate5</artifactId>
             <version>3.7</version>
         </dependency>
+        <dependency>
+            <groupId>jakarta.xml.soap</groupId>
+            <artifactId>jakarta.xml.soap-api</artifactId>
+            <version>2.0.0-RC3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.messaging.saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>1.5.1</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

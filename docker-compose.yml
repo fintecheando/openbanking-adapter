@@ -5,5 +5,7 @@ services:
     image: harbor.flexcore.mx/flexcore/com.mx.mifos.openbanking.adapter.master
     container_name: openbanking-adapter
     restart: always
+    extra_hosts:
+      - "fineractmysql:172.31.10.64"
     ports:
       - 7080:8080
