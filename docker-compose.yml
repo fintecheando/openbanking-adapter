@@ -2,7 +2,7 @@ version: '3.7'
 services:
   # OPEN BANKING ADAPTER
   openbanking-adapter:
-    image: harbor.flexcore.mx/flexcore/com.mx.mifos.openbanking.openbanking-adapter.master    
+    image: harbor.flexcore.mx/flexcore/com.mx.mifos.openbanking.adapter.master
     container_name: openbanking-adapter
     restart: always
     ports:
