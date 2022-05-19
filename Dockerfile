@@ -6,7 +6,7 @@ COPY . /fineract/
 
 WORKDIR /fineract
 
-RUN ./mvn clean package
+RUN ./mvnw clean package
 
 FROM azul/zulu-openjdk-debian:8 as runner
 
