@@ -8,4 +8,4 @@ WORKDIR /
 
 EXPOSE 8080
 
-CMD java --add-modules java.xml.ws -jar /app/operations-app.jar
+CMD java -jar /app/operations-app.jar
