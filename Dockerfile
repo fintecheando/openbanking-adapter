@@ -2,7 +2,7 @@ FROM azul/zulu-openjdk-debian:17 as runner
 
 RUN mkdir -p /app/libs
 
-COPY /target/backend-0.0.1-SNAPSHOT.jar /app/operations-app.jar
+COPY /openbanking-adapter/target/openbanking-adapter-1.0.0-SNAPSHOT.jar /app/operations-app.jar
 
 WORKDIR /
 
