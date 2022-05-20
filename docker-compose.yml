@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  # OPEN BANKING ADAPTER
+  openbanking-adapter:
+    image: harbor.flexcore.mx/flexcore/com.mx.mifos.openbanking.adapter.master
+    container_name: openbanking-adapter
+    restart: always
+    environment:
+      - "SPRING_PROFILES_ACTIVE=fineractx"
+    extra_hosts:
+      - "fineractmysql:172.31.10.64"
+    ports:
+      - 5000:5000
+      - 62020:62020
+      - 62021:62021
