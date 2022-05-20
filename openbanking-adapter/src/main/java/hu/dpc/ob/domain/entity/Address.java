@@ -12,11 +12,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,7 +111,7 @@ public final class Address extends AbstractEntity {
     }
 
     public AddressLine addLine(String line) {
-        if (Strings.isEmpty(line))
+        if (StringUtils.isEmpty(line))
             return null;
 
         AddressLine addressLine = new AddressLine(this, line);

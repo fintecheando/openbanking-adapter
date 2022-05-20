@@ -11,9 +11,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.logging.log4j.util.Strings;
 
 import javax.validation.constraints.NotEmpty;
+
+import org.apache.commons.lang3.StringUtils;
 
 @Getter
 @Setter(AccessLevel.PUBLIC)
@@ -31,11 +32,11 @@ public class UriProperties {
     private String path;
 
     public String getUrl() {
-        return host + (Strings.isEmpty(port) ? "" : (':' + port)) + getUriPath();
+        return host + (StringUtils.isEmpty(port) ? "" : (':' + port)) + getUriPath();
     }
 
     public String getUriPath() {
-        return (Strings.isEmpty(base) ? "" : ((base.charAt(0) != '/' ? '/' : "") + base))
+        return (StringUtils.isEmpty(base) ? "" : ((base.charAt(0) != '/' ? '/' : "") + base))
                 + ((path.charAt(0) != '/' ? '/' : "") + path);
     }
 

@@ -1,6 +1,3 @@
-# CREATE SCHEMA IF NOT EXISTS `ob_tn01`;
-
-USE `ob_tn01`;
 
 CREATE TABLE `user`
 (

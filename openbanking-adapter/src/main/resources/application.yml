@@ -6,14 +6,18 @@
 #    https://mozilla.org/MPL/2.0/.
 #
 
-debug: true
-
 server:
   port: 5000
+  servlet:
+    context-path: ${FINERACT_SERVER_SERVLET_CONTEXT_PATH:/}
 
 spring:
   profiles:
     active: in1, prod, fineractx # in1/in2, dev/prod, fineractx/fineractcn, test
+
+logging:
+  level:
+    root: ${FINERACT_CONSOLE_LOG:INFO}
 
 ---
 spring:
@@ -34,7 +38,7 @@ spring:
   main:
     web-application-type: none
   datasource:
-    url: jdbc:mariadb://fineractmysql:3306/ob_${tn1}
+    url: jdbc:mariadb://127.0.0.1:3306/ob_${tn1}
     username: root
     password: mysql
     driver-class-name: org.mariadb.jdbc.Driver
@@ -58,13 +62,6 @@ spring:
 
 ---
 
-logging:
-  level:
-    liquibase: INFO
-#    org:
-#      springframework:
-#        transaction:
-#          interceptor: TRACE
 
 management:
   endpoints:
@@ -351,64 +348,3 @@ psp-settings:
     path: transfer/{transactionId}
     method: GET
 #---
-
-# spring:
-#   profiles: fineractcn
-
-# Fineract CN
-# psp-settings:
-#   auth:
-#     profile: OAUTH # NONE, BASIC, BASIC_TWOFACTOR, OAUTH, OAUTH_TWOFACTOR
-#     encode: BASE64 # NONE, BASE64
-#   headers:
-#     - name: user
-#       key: User
-#     - name: tenant
-#       key: X-Tenant-Identifier
-#     - name: transaction-tenant
-#       key: X-Tenant-Identifier
-#   operations: #adapter -> psp
-#     - name: operation-basic-settings
-#       user: interopUser
-#       password: intop@d1
-#       tenants:
-#         ${tn1}:
-#           host: http://localhost # http://rhino.mlabs.dpc.hu
-#         ${tn2}:
-#           host: http://localhost # http://elephant.mlabs.dpc.hu
-#       port: 80 #2034
-#       base:
-#     - name: auth #login
-#       port: 80 #2021
-#       base: identity/v1
-#       path: token
-#       method: GET
-#       body-class: hu.dpc.ob.rest.dto.psp.FineractCnLoginResponseDto
-# 
-#     - name: accounts
-#       path: clients/{clientId}/accounts
-#       method: GET
-#     - name: client
-#       path: clients/{clientId}
-#       method: GET
-# 
-#     - name: account
-#       path: interoperation/v1/accounts/{accountId}
-#       method: GET
-#     - name: transactions
-#       path: interoperation/v1/accounts/{accountId}/transactions
-#       method: GET
-#     - name: identifiers
-#       path: interoperation/v1/accounts/{accountId}/identifiers
-#       method: GET
-#     - name: party-by-identifier
-#       path: interoperation/v1/parties/{idType}/{idValue}
-#       method: GET
-#     - name: party-by-subidentifier
-#       path: interoperation/v1/parties/{idType}/{idValue}/{subIdOrType}
-#       method: GET
-#     - name: quote-create
-#       path: interoperation/v1/quotes
-#       method: POST
-# 
-

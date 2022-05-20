@@ -14,7 +14,7 @@ import hu.dpc.ob.model.service.PaymentService;
 import hu.dpc.ob.rest.ExchangeHeader;
 import hu.dpc.ob.rest.dto.ob.api.PisConsentCreateRequestDto;
 import org.apache.camel.Exchange;
-import org.apache.logging.log4j.util.Strings;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +34,7 @@ public class PisConsentCreateValidateProcessor extends ApiValidateProcessor {
         super.process(exchange);
 
         PisConsentCreateRequestDto request = exchange.getProperty(ExchangeHeader.REQUEST_DTO.getKey(), PisConsentCreateRequestDto.class);
-        if (Strings.isEmpty(request.getData().getInitiation().getCreditorAccount().getName()))
+        if (StringUtils.isEmpty(request.getData().getInitiation().getCreditorAccount().getName()))
             throw new UnsupportedOperationException("Creditor account 'name' is missing");
     }
 }
