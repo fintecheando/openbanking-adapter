@@ -28,7 +28,7 @@ tn1: tn05
 tn2: tn06
 
 domain:
-  tn1: leopard.mifos.io
+  tn1: tiermoney.com
   tn2: gorilla.mifos.io
 ---
 
@@ -132,7 +132,7 @@ api-settings:
         - name: ${tn2}
           port: 62021
         host: http://0.0.0.0
-        base: adapter/ob
+        base: ${TPP_ADAPTER_SERVER_SERVLET_CONTEXT_PATH:adapter}/ob
       - name: ais-consent-create #create AIS TPP consent
         path: account-access-consents
         method: POST
@@ -204,9 +204,9 @@ access-settings:
         password: admin
         tenants:
         - name: ${tn1}
-          host: https://api-${domain.tn1}
+          host: https://apis.${domain.tn1}
         - name: ${tn2}
-          host: https://api-${domain.tn2}
+          host: https://apis.${domain.tn2}
       - name: userinfo
         port: 8243
         base:
@@ -229,7 +229,7 @@ access-settings:
         - name: ${tn2}
           port: 63031
         host: http://0.0.0.0
-        base: adapter/ob
+        base: ${TPP_ADAPTER_SERVER_SERVLET_CONTEXT_PATH:adapter}/ob
       - name: ais-consent #get user consent
         path: consents/{consentId}
         method: GET
