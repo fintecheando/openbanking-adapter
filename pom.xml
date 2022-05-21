@@ -28,7 +28,7 @@
 
         <springframework.boot.version>2.6.3</springframework.boot.version>
         <camel.version>2.24.0</camel.version>
-        <jetty.version>9.4.13.v20181111</jetty.version>
+        <jetty.version>9.4.46.v20220331</jetty.version>
         <org.json.version>20180813</org.json.version>
         <fastinfoset.version>1.2.15</fastinfoset.version>
         <mockito.version>2.23.0</mockito.version>
@@ -106,6 +106,31 @@
                     <workingDirectory>./work</workingDirectory>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>                  
+                    <propertyFile>src/main/resources/liquibase.properties</propertyFile>
+                </configuration> 
+                <dependencies>
+                    <dependency>
+                        <groupId>org.liquibase.ext</groupId>
+                        <artifactId>liquibase-hibernate4</artifactId>
+                        <version>3.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-beans</artifactId>
+                        <version>5.3.20</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework.data</groupId>
+                        <artifactId>spring-data-jpa</artifactId>
+                        <version>2.7.0</version>
+                    </dependency>
+                </dependencies>               
+            </plugin> 
         </plugins>
     </build>
 </project>

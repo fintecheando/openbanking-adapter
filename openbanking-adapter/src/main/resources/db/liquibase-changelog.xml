@@ -1,0 +1,8 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <property name="current_date" value="CURDATE()" context="mysql"/>
+    <property name="current_date" value="CURRENT_DATE" context="postgresql"/>
+    <property name="current_datetime" value="NOW()"/>
+    <include file="tenant/parts/0001_initial_schema.xml" relativeToChangelogFile="true" />
+</databaseChangeLog>

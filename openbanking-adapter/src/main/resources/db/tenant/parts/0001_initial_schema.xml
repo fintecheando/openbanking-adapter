@@ -1,0 +1,572 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="ob_adapter" id="0001">
+        <createTable tableName="account_identification">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="scheme_code" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identification" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="secondary_identification" type="VARCHAR(128)"/>
+            <column name="name" type="VARCHAR(70)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0002">
+        <createTable tableName="address">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="address_type_code" type="VARCHAR(32)"/>
+            <column name="department" type="VARCHAR(70)"/>
+            <column name="sub_department" type="VARCHAR(70)"/>
+            <column name="country" type="CHAR(2)"/>
+            <column name="country_division1" type="VARCHAR(35)"/>
+            <column name="country_division2" type="VARCHAR(35)"/>
+            <column name="town" type="VARCHAR(35)"/>
+            <column name="postCode" type="VARCHAR(16)"/>
+            <column name="street" type="VARCHAR(70)"/>
+            <column name="building" type="VARCHAR(16)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0003">
+        <createTable tableName="address_line">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="address_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="line" type="VARCHAR(70)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0004">
+        <createTable tableName="charge">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bearer_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(23, 5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0005">
+        <createTable tableName="consent">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="consent_id" type="VARCHAR(128)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="scope_code" type="VARCHAR(8)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="user_id" type="BIGINT"/>
+            <column name="status_code" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="current_timestamp(3)" name="created_on" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="updated_on" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="expires_on" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="transaction_from" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="transaction_to" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0006">
+        <createTable tableName="consent_account">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="consent_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0007">
+        <createTable tableName="consent_event">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="consent_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resource_id" type="VARCHAR(128)"/>
+            <column defaultValueComputed="current_timestamp(3)" name="created_on" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seq_no" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="consent_status_code" type="VARCHAR(128)"/>
+            <column defaultValueComputed="NULL" name="cause_id" type="BIGINT"/>
+            <column name="reason" type="VARCHAR(64)"/>
+            <column name="reason_desc" type="VARCHAR(256)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0008">
+        <createTable tableName="consent_permission">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="consent_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="permission_code" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0009">
+        <createTable tableName="interop_extension">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="interop_payment_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="key" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0010">
+        <createTable tableName="interop_payment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="amount_type_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="scenario_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subscenario_code" type="VARCHAR(32)"/>
+            <column name="initiator_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="initiator_type_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="refund_transaction_id" type="VARCHAR(36)"/>
+            <column name="refund_reason" type="VARCHAR(36)"/>
+            <column name="balance_of_payments" type="CHAR(3)"/>
+            <column name="geo_longitude" type="VARCHAR(32)"/>
+            <column name="geo_latitude" type="VARCHAR(32)"/>
+            <column name="note" type="VARCHAR(128)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0011">
+        <createTable tableName="payment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="consent_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="payment_id" type="VARCHAR(40)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="instruction_id" type="VARCHAR(36)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="end_to_end_id" type="VARCHAR(36)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="transaction_id" type="VARCHAR(36)"/>
+            <column name="local_instrument_code" type="VARCHAR(32)"/>
+            <column name="instructed_amount" type="DECIMAL(23, 5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="debtor_identification_id" type="BIGINT"/>
+            <column name="creditor_identification_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="creditor_address_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
+            <column name="status_code" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="current_timestamp(3)" name="created_on" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="updated_on" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="expires_on" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="expected_execution_on" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="expected_settlement_on" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="performed_on" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0012">
+        <createTable tableName="payment_authorization">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="authorisation_type_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="number_required" type="SMALLINT"/>
+            <column defaultValueComputed="NULL" name="number_received" type="SMALLINT"/>
+            <column defaultValueComputed="NULL" name="updated_on" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="expires_on" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0013">
+        <createTable tableName="payment_event">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_code" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="current_timestamp(3)" name="created_on" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seq_no" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="payment_status_code" type="VARCHAR(128)"/>
+            <column defaultValueComputed="NULL" name="cause_id" type="BIGINT"/>
+            <column name="reason" type="VARCHAR(64)"/>
+            <column name="reason_desc" type="VARCHAR(256)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0014">
+        <createTable tableName="payment_risk">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="payment_context_code" type="VARCHAR(32)"/>
+            <column name="merchant_category" type="CHAR(4)"/>
+            <column name="merchant_customer_identification" type="VARCHAR(70)"/>
+            <column defaultValueComputed="NULL" name="delivery_address_id" type="BIGINT">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0015">
+        <createTable tableName="payment_transfer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transfer_id" type="VARCHAR(36)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="status_code" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="local_instrument_code" type="VARCHAR(32)"/>
+            <column name="transfer_status" type="VARCHAR(128)"/>
+            <column name="reason_code" type="VARCHAR(32)"/>
+            <column name="reason_desc" type="VARCHAR(256)"/>
+            <column defaultValueComputed="NULL" name="updated_on" type="timestamp"/>
+            <column defaultValueComputed="NULL" name="performed_on" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0016">
+        <createTable tableName="remittance">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="unstructured" type="VARCHAR(140)"/>
+            <column name="reference" type="VARCHAR(35)"/>
+            <column name="supplementary" type="VARCHAR(256)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0017">
+        <createTable tableName="sca_support">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="sca_exemption_code" type="VARCHAR(32)"/>
+            <column name="authentication_approach_code" type="VARCHAR(32)"/>
+            <column name="reference_payment_id" type="VARCHAR(128)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0018">
+        <createTable tableName="trusted_beneficiary">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="account_identification_id" type="BIGINT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column defaultValueComputed="current_timestamp(3)" name="created_on" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="expires_on" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0019">
+        <createTable tableName="trusted_client">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="client_id" type="VARCHAR(128)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column defaultValueComputed="current_timestamp(3)" name="created_on" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="expires_on" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0020">
+        <createTable tableName="trusted_user_beneficiary">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="client_id" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_identification_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="limit_amount" type="DECIMAL(23, 5)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="current_timestamp(3)" name="created_on" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueComputed="NULL" name="expires_on" type="timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0021">
+        <createTable tableName="user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="api_user_id" type="VARCHAR(128)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="psp_user_id" type="VARCHAR(128)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="active" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0022">
+        <addUniqueConstraint columnNames="scheme_code, identification, secondary_identification" constraintName="uk_account_identification.identification" tableName="account_identification"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0023">
+        <addUniqueConstraint columnNames="consent_id, account_id" constraintName="uk_consent_account.account" tableName="consent_account"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0024">
+        <addUniqueConstraint columnNames="consent_id, permission_code" constraintName="uk_consent_permission.permission" tableName="consent_permission"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0025">
+        <addUniqueConstraint columnNames="client_id, user_id, account_identification_id" constraintName="uk_trusted_user_beneficiary.account" tableName="trusted_user_beneficiary"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0026">
+        <createIndex indexName="fk_address_line.address" tableName="address_line">
+            <column name="address_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0027">
+        <createIndex indexName="fk_charge.payment" tableName="charge">
+            <column name="payment_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0028">
+        <createIndex indexName="fk_consent.user" tableName="consent">
+            <column defaultValueComputed="NULL" name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0029">
+        <createIndex indexName="fk_consent_account.event" tableName="consent_account">
+            <column name="event_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0030">
+        <createIndex indexName="fk_consent_event.cause" tableName="consent_event">
+            <column defaultValueComputed="NULL" name="cause_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0031">
+        <createIndex indexName="fk_consent_event.consent" tableName="consent_event">
+            <column name="consent_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0032">
+        <createIndex indexName="fk_consent_permission.event" tableName="consent_permission">
+            <column name="event_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0033">
+        <createIndex indexName="fk_payment.creditor" tableName="payment">
+            <column name="creditor_identification_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0034">
+        <createIndex indexName="fk_payment.debtor" tableName="payment">
+            <column defaultValueComputed="NULL" name="debtor_identification_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0035">
+        <createIndex indexName="fk_payment_event.cause" tableName="payment_event">
+            <column defaultValueComputed="NULL" name="cause_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0036">
+        <createIndex indexName="fk_payment_event.payment" tableName="payment_event">
+            <column name="payment_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0037">
+        <createIndex indexName="fk_payment_transfer.payment" tableName="payment_transfer">
+            <column name="payment_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0038">
+        <createIndex indexName="fk_trusted_user_beneficiary.account" tableName="trusted_user_beneficiary">
+            <column name="account_identification_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0039">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="address_line" constraintName="fk_address_line.address" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="address" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0040">
+        <addForeignKeyConstraint baseColumnNames="payment_id" baseTableName="charge" constraintName="fk_charge.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0041">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="consent" constraintName="fk_consent.user" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0042">
+        <addForeignKeyConstraint baseColumnNames="consent_id" baseTableName="consent_account" constraintName="fk_consent_account.consent" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="consent" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0043">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="consent_account" constraintName="fk_consent_account.event" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="consent_event" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0044">
+        <addForeignKeyConstraint baseColumnNames="cause_id" baseTableName="consent_event" constraintName="fk_consent_event.cause" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="consent_event" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0045">
+        <addForeignKeyConstraint baseColumnNames="consent_id" baseTableName="consent_event" constraintName="fk_consent_event.consent" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="consent" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0046">
+        <addForeignKeyConstraint baseColumnNames="consent_id" baseTableName="consent_permission" constraintName="fk_consent_permission.consent" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="consent" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0047">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="consent_permission" constraintName="fk_consent_permission.event" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="consent_event" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0048">
+        <addForeignKeyConstraint baseColumnNames="interop_payment_id" baseTableName="interop_extension" constraintName="fk_interop_extension.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="interop_payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0049">
+        <addForeignKeyConstraint baseColumnNames="payment_id" baseTableName="interop_payment" constraintName="fk_interop_payment.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0050">
+        <addForeignKeyConstraint baseColumnNames="creditor_address_id" baseTableName="payment" constraintName="fk_payment.address" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="address" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0051">
+        <addForeignKeyConstraint baseColumnNames="consent_id" baseTableName="payment" constraintName="fk_payment.consent" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="consent" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0052">
+        <addForeignKeyConstraint baseColumnNames="creditor_identification_id" baseTableName="payment" constraintName="fk_payment.creditor" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="account_identification" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0053">
+        <addForeignKeyConstraint baseColumnNames="debtor_identification_id" baseTableName="payment" constraintName="fk_payment.debtor" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="account_identification" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0054">
+        <addForeignKeyConstraint baseColumnNames="payment_id" baseTableName="payment_authorization" constraintName="fk_payment_authorization.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0055">
+        <addForeignKeyConstraint baseColumnNames="cause_id" baseTableName="payment_event" constraintName="fk_payment_event.cause" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="consent_event" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0056">
+        <addForeignKeyConstraint baseColumnNames="payment_id" baseTableName="payment_event" constraintName="fk_payment_event.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0057">
+        <addForeignKeyConstraint baseColumnNames="payment_id" baseTableName="payment_risk" constraintName="fk_payment_risk.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0058">
+        <addForeignKeyConstraint baseColumnNames="payment_id" baseTableName="payment_transfer" constraintName="fk_payment_transfer.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0059">
+        <addForeignKeyConstraint baseColumnNames="payment_id" baseTableName="remittance" constraintName="fk_remittance.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0060">
+        <addForeignKeyConstraint baseColumnNames="payment_id" baseTableName="sca_support" constraintName="fk_sca_support.payment" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="payment" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0061">
+        <addForeignKeyConstraint baseColumnNames="account_identification_id" baseTableName="trusted_beneficiary" constraintName="fk_trusted_beneficiary.account" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="account_identification" validate="true"/>
+    </changeSet>
+    <changeSet author="ob_adapter" id="0062">
+        <addForeignKeyConstraint baseColumnNames="account_identification_id" baseTableName="trusted_user_beneficiary" constraintName="fk_trusted_user_beneficiary.account" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="account_identification" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

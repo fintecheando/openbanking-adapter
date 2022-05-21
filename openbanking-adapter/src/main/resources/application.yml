@@ -57,8 +57,8 @@ spring:
       ejb:
         use_class_enhancer: true
   liquibase:
-    enabled: false
-    change-log: classpath:/db/liquibase-changelog.yml
+    enabled: true
+    change-log: classpath:/db/liquibase-changelog.xml
 
 ---
 
