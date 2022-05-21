@@ -9,15 +9,15 @@
 server:
   port: 5000
   servlet:
-    context-path: ${FINERACT_SERVER_SERVLET_CONTEXT_PATH:/}
+    context-path: ${TPP_ADAPTER_SERVER_SERVLET_CONTEXT_PATH:/}
 
 spring:
   profiles:
-    active: in1, prod, fineractx # in1/in2, dev/prod, fineractx/fineractcn, test
+    active: ${TPP_ADAPTER_PROFILES_ACTIVE:in1, prod, fineractx} # in1/in2, dev/prod, fineractx/fineractcn, test
 
 logging:
   level:
-    root: ${FINERACT_CONSOLE_LOG:INFO}
+    root: ${TPP_ADAPTER_CONSOLE_LOG:INFO}
 
 ---
 spring:
@@ -38,10 +38,10 @@ spring:
   main:
     web-application-type: none
   datasource:
-    url: jdbc:mariadb://127.0.0.1:3306/ob_${tn1}
-    username: root
-    password: mysql
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: ${TPP_ADAPTER_HIKARI_URL:jdbc:mariadb://db-server:3306}/ob_${tn1}
+    username: ${TPP_ADAPTER_HIKARI_USERNAME:root}
+    password: ${TPP_ADAPTER_HIKARI_PASSWORD:mysql}
+    driver-class-name: ${TPP_ADAPTER_HIKARI_DRIVER_SOURCE_CLASS_NAME:org.mariadb.jdbc.Driver}
   jpa:
     show-sql: true
     hibernate:
@@ -57,7 +57,7 @@ spring:
       ejb:
         use_class_enhancer: true
   liquibase:
-    enabled: true
+    enabled: ${TPP_ADAPTER_LIQUIBASE_ENABLED:true}
     change-log: classpath:/db/liquibase-changelog.xml
 
 ---
@@ -273,8 +273,6 @@ hub:
   base: channel
 ---
 
-spring:
-  profiles: fineractx
 
 # Fineract 1.2
 psp-settings:
