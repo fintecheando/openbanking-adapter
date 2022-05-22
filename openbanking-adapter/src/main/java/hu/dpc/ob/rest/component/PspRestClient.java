@@ -269,12 +269,14 @@ public class PspRestClient {
         log.debug(String.format("Call PSP " + method + " /" + opProps.getName() + ", tenant: %s", tenant));
 
         UriProperties tenantProps = opProps.getTenantProps(tenant);
-        String url = tenantProps.getUrl() + "?grant_type=password&username=" + tenantAuthData.getUser() + "&password=" + tenantAuthData.getPassword();
+        // String url = tenantProps.getUrl() + "?grant_type=password&username=" + tenantAuthData.getUser() + "&password=" + tenantAuthData.getPassword();
+        String url = tenantProps.getUrl();
+        String payload = "{\"username\":\"" + tenantAuthData.getUser() + "\", \"password\": \"" + tenantAuthData.getPassword() + "\"}";
 
         Map<String, String> headers = new HashMap<>();
         headers.put(pspSettings.getHeaderProps(PspSettings.PspHeader.TENANT).getKey(), tenant);
 
-        String responseJson = restClient.call(url, method, headers, null);
+        String responseJson = restClient.call(url, method, headers, payload);
 
         log.debug(String.format("Response PSP " + method + " /" + opProps.getName() + ", tenant: %s, payload: %s", tenant, responseJson));
 
