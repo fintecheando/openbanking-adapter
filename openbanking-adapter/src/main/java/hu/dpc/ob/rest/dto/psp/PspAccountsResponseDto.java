@@ -20,6 +20,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class PspAccountsResponseDto {
 
+    private List<PspAccountsLoanData> groupLoanIndividualMonitoringAccounts;
     private List<PspAccountsLoanData> loanAccounts;
     private List<PspAccountsSavingsData> savingsAccounts;
     private List<PspAccountsShareData> shareAccounts ;
