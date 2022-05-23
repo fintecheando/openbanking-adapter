@@ -10,6 +10,9 @@ server:
   port: 5000
   servlet:
     context-path: ${TPP_ADAPTER_SERVER_SERVLET_CONTEXT_PATH:/}
+  ssl:
+    protocol: TLS
+    enabled-protocols: TLSv1.2,TLSv1.3
 
 spring:
   profiles:
@@ -79,6 +82,7 @@ camel:
 
 adapter-settings:
   instance: ${instance}
+  # env: test
   schemas: OB # OB (OpenBanking UK), PSD2 (NextGenPsd2)
   tenants:
   - name: ${tn1}

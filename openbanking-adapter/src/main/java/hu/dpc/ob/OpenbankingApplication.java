@@ -106,7 +106,8 @@ public class OpenbankingApplication {
 			// nothing
         }
 
-        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new String[]{"TLSv1.2","TLSv1.3"},
+			null, javax.net.ssl.HttpsURLConnection.getDefaultHostnameVerifier());
 
 		CloseableHttpClient httpClient = HttpClients.custom()
                 .setSSLContext(sslContext)
